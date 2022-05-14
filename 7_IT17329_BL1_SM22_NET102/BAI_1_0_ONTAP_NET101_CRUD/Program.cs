@@ -46,6 +46,12 @@ namespace BAI_1_0_ONTAP_NET101_CRUD
                         break;
                }
            } while (input != "6");
+           /*
+            * Sau khi hoàn thành bài:
+            * 6. Tìm kiếm gần đúng theo tên Mèo
+            * 7. Tìm kiếm cân nặng mèo theo khoảng.
+            * 8. Sắp xếp giảm dần danh sách mèo theo cân nặng (Không in ra.)
+            */
         }
     }
 }
