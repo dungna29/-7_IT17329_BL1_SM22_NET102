@@ -27,15 +27,14 @@ namespace BAI_1_0_ONTAP_NET101_CRUD
             };
         }
 
-        private void Them1()
+        public void Them1()
         {
             Console.WriteLine("Mời nhập sl: ");
             _input = Console.ReadLine();
             for (int i = 0; i < Convert.ToInt16(_input); i++)
             {
                 _meo = new Meo();
-                Console.WriteLine("Mời bạn nhập ID: ");
-                _meo.Id = Convert.ToInt32(Console.ReadLine());
+                _meo.Id = GetAutoID();
                 Console.WriteLine("Mời bạn nhập tên: ");
                 _meo.Ten = Console.ReadLine();
                 Console.WriteLine("Mời bạn nhập cân nặng: ");
@@ -49,7 +48,7 @@ namespace BAI_1_0_ONTAP_NET101_CRUD
         }
         private void Them2()
         {
-            
+
             _input = GetInputValue("sl");
             for (int i = 0; i < Convert.ToInt16(_input); i++)
             {
@@ -64,19 +63,106 @@ namespace BAI_1_0_ONTAP_NET101_CRUD
         }
         private void Them3()
         {
-            
+
             _input = GetInputValue("sl");
             for (int i = 0; i < Convert.ToInt16(_input); i++)
             {
-              
+
                 _lstMeos.Add(new Meo(Convert.ToInt32(GetInputValue("ID")), GetInputValue("Tên"), Convert.ToDouble(GetInputValue("Cân nặng")), Convert.ToInt32(GetInputValue("giới tính: (1 Đực | 0 Cái)")), GetInputValue("sở thích")));
             }
         }
+        //Tìm kiếm, Sửa, Xóa
+        public void TimKiem()
+        {
+            //     Console.WriteLine("Mời bạn nhập ID: ");
+            //     _input = Console.ReadLine();
+            //     for (int i = 0; i < _lstMeos.Count; i++)
+            //     {
+            //         if (_lstMeos[i].Id == Convert.ToInt16(_input))
+            //         {
+            //             _lstMeos[i].InRaManHinh();
+            //             return;
+            //         }
+            //     }
+            //     Console.WriteLine("Không tìm thấy");
+            var temp = GetIndexByID();
+            if (temp == -1) return;
+            _lstMeos[temp].InRaManHinh();
+        }
+        public void Xoa()
+        {
+            // Console.WriteLine("Mời bạn nhập ID: ");
+            // _input = Console.ReadLine();
+            // for (int i = 0; i < _lstMeos.Count; i++)
+            // {
+            //     if (_lstMeos[i].Id == Convert.ToInt16(_input))
+            //     {
+            //         _lstMeos.RemoveAt(i);
+            //         return;
+            //     }
+            // }
+            // Console.WriteLine("Không tìm thấy");
+            var temp = GetIndexByID();
+            if (temp == -1) return;
+            _lstMeos.RemoveAt(temp);
+            Console.WriteLine("Xóa thành công");
+        }
+        public void Sua()
+        {
+            // Console.WriteLine("Mời bạn nhập ID: ");
+            // _input = Console.ReadLine();
+            // for (int i = 0; i < _lstMeos.Count; i++)
+            // {
+            //     if (_lstMeos[i].Id == Convert.ToInt16(_input))
+            //     {
+            //         Console.WriteLine("Mời nhập tên: ");
+            //         _lstMeos[i].Ten = Console.ReadLine();
+            //         return;
+            //     }
+            // }
+            // Console.WriteLine("Không tìm thấy");
+            var temp = GetIndexByID();
+            if (temp == -1) return;
+            _lstMeos[temp].Ten = GetInputValue("Tên");
+        }
 
+        public int GetIndexByID()
+        {
+            // Console.WriteLine("Mời bạn nhập ID: ");
+            // _input = Console.ReadLine();
+            // for (int i = 0; i < _lstMeos.Count; i++)
+            // {
+            //     if (_lstMeos[i].Id == Convert.ToInt16(_input))
+            //     {
+            //         
+            //         return i;
+            //     }
+            // }
+            // Console.WriteLine("Không tìm thấy");
+            // return -1;
+            return _lstMeos.FindIndex(c => c.Id == Convert.ToInt16(GetInputValue("ID")));
+        }
+        public void InDs()
+        {
+            foreach (var x in _lstMeos)
+            {
+                x.InRaManHinh();
+            }
+        }
         public string GetInputValue(string msg)
         {
             Console.WriteLine($"Mời bạn nhập {msg}: ");
             return Console.ReadLine();
+        }
+
+        public int GetAutoID()
+        {
+            if (_lstMeos.Count < 0)
+            {
+                return 1;
+            }
+
+            return _lstMeos.Max(c => c.Id) + 1;
         }
     }
 }
