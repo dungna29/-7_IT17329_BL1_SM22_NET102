@@ -68,15 +68,43 @@ namespace BAI_1_6_EXCEPTION
                 Console.WriteLine(e.Message);
                 Console.WriteLine(e.StackTrace);
                 Console.WriteLine(e.GetType().Name);
-                
+
+            }
+            Console.WriteLine("Kết thúc chương trình");
+        }
+        //Finally
+        static void Vidu3()
+        {
+            int a = 6, b = 0, c;
+            try
+            {
+                c = a / b;
+                Console.WriteLine(c);
+            }
+            catch (DivideByZeroException)
+            {
+                //Thực hiện 1 hành động nào đó
+            }
+            catch (FormatException)
+            {
+
+            }
+            catch (Exception)
+            {
+
+            }
+            finally
+            {
+                //Luôn thực thi
+                Console.WriteLine("finally");
             }
             Console.WriteLine("Kết thúc chương trình");
         }
         static void Main(string[] args)
         {
-            
-                Vidu2(); 
-            
+
+            Vidu3();
+
         }
     }
 }
