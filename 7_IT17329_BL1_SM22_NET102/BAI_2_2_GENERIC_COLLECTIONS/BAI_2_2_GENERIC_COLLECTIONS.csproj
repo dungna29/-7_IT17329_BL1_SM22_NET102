@@ -4,10 +4,10 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{09DD93EC-7F5D-4DBE-8E23-D1F30BACFB22}</ProjectGuid>
+    <ProjectGuid>{6FC6FC62-B22E-45C6-B046-E5FA48DDCD10}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <RootNamespace>BAI_2_1_CLASS_GENERIC</RootNamespace>
-    <AssemblyName>BAI_2_1_CLASS_GENERIC</AssemblyName>
+    <RootNamespace>BAI_2_2_GENERIC_COLLECTIONS</RootNamespace>
+    <AssemblyName>BAI_2_2_GENERIC_COLLECTIONS</AssemblyName>
     <TargetFrameworkVersion>v4.7</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -43,8 +43,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ArrayGeneric.cs" />
-    <Compile Include="ClassGeneric.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
