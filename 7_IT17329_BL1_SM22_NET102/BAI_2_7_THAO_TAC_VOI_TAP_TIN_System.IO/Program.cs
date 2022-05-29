@@ -102,16 +102,16 @@ namespace BAI_2_7_THAO_TAC_VOI_TAP_TIN_System.IO
             // di.CreateSubdirectory(@"fpoly2021\ajay11");
 
             //Delete
-            DirectoryInfo di = new DirectoryInfo(@"C:\fpoly2021");
-            Console.WriteLine("Name:{0}", di.FullName);
-
-            Console.Write("Are you sure to Delete:");
-            string str = Console.ReadLine();
-            if (str == "y")
-            {
-                Directory.Delete(@"C:\fpoly2021", true);
-            }
-            Console.Write("Deleted.....");
+             // DirectoryInfo di = new DirectoryInfo(@"C:\fpoly2021");
+             // Console.WriteLine("Name:{0}", di.FullName);
+             //
+             // Console.Write("Are you sure to Delete:");
+             // string str = Console.ReadLine();
+             // if (str == "y")
+             // {
+             //     Directory.Delete(@"C:\fpoly2021", true);
+             // }
+             // Console.Write("Deleted.....");
         }
 
         #endregion
@@ -231,7 +231,7 @@ namespace BAI_2_7_THAO_TAC_VOI_TAP_TIN_System.IO
         #endregion
         static void Main(string[] args)
         {
-            DiskPartition();
+            DirectoryInfo2();
         }
     }
 }
