@@ -30,14 +30,14 @@ namespace BAI_2_4_IMPLICITLY_VA_DYNAMIC_TYPE
          */
         static void Main(string[] args)
         {
-            #region Phần 1: Implicitly
+            #region Phần 1: Implicitly - Định kiểu ngay khi code
 
             //1. Khái báo:
             var temp1 = 1;//Implicitly
             var temp2 = new int[5];//Implicitly
             var temp3 = "112222";//Implicitly
 
-            int temp4 = 2022;//Explicitly
+            int temp4 = 2022;//Explicitly - Tường minh
 
             //2. Hạn chế:
             //var temp5 = null;// Không thể gán null khi khởi tạo
@@ -50,9 +50,38 @@ namespace BAI_2_4_IMPLICITLY_VA_DYNAMIC_TYPE
 
             //var arr = {5, 6, 7};
             var arr = new int[] {5, 6, 7};
-            
+            var lstString = new List<string>() {"Name", "Name"};
+
+            #endregion
+
+            #region Phần 2: Dynamic - Định kiểu khi biên dịch code
+            //1. Khai báo: Các kiểu dữ liệu rồi giá trị tương tự như var
+            dynamic d1;
+            d1 = 1;
+            d1 = "";
+            //Khai báo nặc danh
+            var SinhVien = new
+            {
+                Msv = "PH123456",
+                Ten = "C#1",
+                NganhHoc = "UDPM .NET"
+            };
+
+            Method2(SinhVien,SinhVien.NganhHoc);
             #endregion
         }
-      
+
+        private dynamic temp13;
+
+        static void Method2(dynamic temp1, dynamic temp2)
+        {
+            Console.WriteLine(temp1.Ten + " " + temp2);
+        }
+
+        // static void Method1(var temp)
+        // {
+        //
+        // }
+
     }
 }
