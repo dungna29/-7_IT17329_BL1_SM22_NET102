@@ -120,7 +120,7 @@ namespace BAI_2_7_THAO_TAC_VOI_TAP_TIN_System.IO
 
         static void FileReadWriteAllText()
         {
-            string path = @"C:\Csharp2\dungna.txt";
+            string path = @"C:\Csharp2\dungna29.txt";
             Console.WriteLine(File.ReadAllText(path));
 
             string temp = "Hoc C# vui khong?";
@@ -231,7 +231,7 @@ namespace BAI_2_7_THAO_TAC_VOI_TAP_TIN_System.IO
         #endregion
         static void Main(string[] args)
         {
-            DirectoryInfo2();
+            FileReadWriteAllText();
         }
     }
 }
