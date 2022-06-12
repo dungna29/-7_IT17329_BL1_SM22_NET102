@@ -24,7 +24,7 @@ namespace BAI_3_1_LINQ_CacCauLenhCoBan
             //Gọi các ví dụ về lý thuyết lên để chạy
             Console.OutputEncoding = Encoding.GetEncoding("UTF-8");
             Program program = new Program();//Khi khởi tạo thì các List trên sẽ có giá trị
-            LINQ_GroupBy();
+            LINQ_Distinct();
         }
         #region 1. Where điều kiện lọc
         static void LINQ_Where()
@@ -81,8 +81,6 @@ namespace BAI_3_1_LINQ_CacCauLenhCoBan
         }
 
         #endregion
-
-
         #region 4. Group By nhóm các phần giống nhau
 
         static void LINQ_GroupBy()
@@ -141,8 +139,6 @@ namespace BAI_3_1_LINQ_CacCauLenhCoBan
 
 
         #endregion
-
-
         #region 5. Join
 
         static void LINQ_JOIN()
@@ -162,8 +158,8 @@ namespace BAI_3_1_LINQ_CacCauLenhCoBan
                     TenNV = c.TenNV
                 };
             var lstSP2 = _lsSanPhams.Where(c => c.TrangThai)
-                .Join(_lstTheLoais, a => a.IdTheLoai, b => b.Id, (a, b) => new {a, b})
-                .Join(_lstNhanViens, c => c.a.IdNhanVien, d => d.Id, (c, d) => new {c, d}).Select(e => new
+                .Join(_lstTheLoais, a => a.IdTheLoai, b => b.Id, (a, b) => new { a, b })
+                .Join(_lstNhanViens, c => c.a.IdNhanVien, d => d.Id, (c, d) => new { c, d }).Select(e => new
                 {
                     Ma = e.c.a.MaSP,
                     Ten = e.c.a.TenSP,
@@ -175,8 +171,168 @@ namespace BAI_3_1_LINQ_CacCauLenhCoBan
 
 
         #endregion
+        #region 6. Select
+
+        static void LINQ_Select()
+        {
+            List<NhanVien> lst1 =
+                (from a in _lstNhanViens
+                 where a.TenNV.Length < 5
+                 select a).ToList();//1 Tập đối tượng
+            var lst2 = (from a in _lstNhanViens
+                        where a.TenNV.Length < 5
+                        select a.TenNV).ToList();//Trả ra 1 tập tên của thuộc thuộc tính đối tượng
+
+            var temp1 = (from a in _lstNhanViens
+                         where a.TenNV.Length < 5
+                         select a).FirstOrDefault();//Trả ra 1 đối tượng nhân viên
+
+            var temp2 = (from a in _lstNhanViens
+                         where a.TenNV.Length < 5
+                         select a.TenNV).FirstOrDefault();// Trả ra 1 tên nhân viên
+
+            foreach (var x in _lstNhanViens.Select(c => c.TenNV))
+            {
+                //In ra 1 List String tên nhân viên
+                Console.WriteLine(x);
+            }
+            //SelectMany đọc thêm.
+            foreach (var x in _lstNhanViens.SelectMany(c => c.TenNV))
+            {
+                //In ra 1 List char 
+                Console.WriteLine(x);
+            }
+        }
 
 
+        #endregion
+        #region 7. ALL/ANY
+
+        static void LINQ_ALL_ANY()
+        {
+            //All: Kiểm tra xem tất cả các phần tử trong dãy có thỏa mãn thì trả ra true
+            //Any: Kiểm tra xem tất cả các phần tử trong dãy chỉ cần có thỏa mãn thì trả ra true
+            var temp1 = _lstNhanViens.All(c => c.MaNV == "Dungna2");
+            var temp2 = _lstNhanViens.Any(c => c.MaNV == "Dungna2");
+            Console.WriteLine("All = " + temp1);//false
+            Console.WriteLine("Any = " + temp2);//true
+
+            //Contains kiểm tra 1 đối tượng có tồn tại trong 1 tập đối tượng hay không
+            NhanVien nv1 = new NhanVien()
+            {
+                Id = 1,
+                MaNV = "Dungna1",
+                TenNV = "Dũng",
+                Email = "dungna29@gmail.com",
+                Sdt = "0912345678",
+                DiaChi = null,
+                ThanhPho = "HN",
+                QueQuan = "HN",
+                TrangThai = true
+            };
+            //Cách không sử contains
+            foreach (var x in _lstNhanViens)
+            {
+                if (x.Id == nv1.Id)//Có bao nhiêu thuộc tính liệt kê vào đây
+                {
+                    Console.WriteLine("Tìm thấy");
+                }
+            }
+
+            var SoSanhObj = _lstNhanViens.Contains(nv1, new NhanVien());
+            Console.WriteLine("Contains obj: " + SoSanhObj);
+        }
+
+
+        #endregion
+        #region 8. Hàm Tổng Hợp Arrgreation - SUM - MIN - MAX - COUNT - AVERAGE
+
+        static void LINQ_HamTongHop()
+        {
+            //Đếm số lượng nhân viên đang ở HN
+            var countNV = _lstNhanViens.Count(c=>c.ThanhPho == "HN");
+
+            //Tìm ra sản phẩm có giá bán lớn nhất
+            var spGiaCao = _lsSanPhams.Max(c => c.GiaBan);
+            Console.WriteLine("Sản phẩm giá cao nhất: " + spGiaCao);
+        }
+
+
+        #endregion
+        #region 9. Firt và FirtOrDefault (Ngoài ra tìm hiểu thêm Last, LastOrDefault, ElementAt,ElementAtOrDefault, Single, SingleOrDefault)
+
+        static void LINQ_Firt_FirtOrDefault()
+        {
+            //Chỉ trả ra 1 giá trị đầu tiên của 1 tập giá trị
+            //First: Trả về phần tử đầu tiền của tập giá trị mà thỏa mãn điều kiện
+            //FirstOrrDefault Trả về phần tử đầu tiền của tập giá trị mà thỏa mãn điều kiện còn không thì sẽ trả về mặc định là null.
+            List<int> lst = new List<int>() {2, 4, 3, 9, 10};
+            Console.WriteLine(lst.FirstOrDefault(c=>c %2 != 0));//=0
+            Console.WriteLine(lst.First(c=>c %2 != 0));//Lỗi
+
+            //Tìm từ dưới lên
+            Console.WriteLine(lst.LastOrDefault(c => c % 2 != 0));//9
+
+            //SingleOrDefault nếu số lẻ xuaatts hiên hơn 1 lần thì nó sẽ chết
+            Console.WriteLine(lst.SingleOrDefault(c => c % 2 != 0));
+
+            Console.WriteLine(lst.ElementAt(11));//Chết vì nằm ngoài index
+            Console.WriteLine(lst.ElementAtOrDefault(11));//Sẽ không chết và lấy ra giá trị mặc định
+        }
+
+
+        #endregion
+        #region 10. Concat
+
+        static void LINQ_Concat()
+        {
+            /*
+            * Concat dùng để nối 2 chuỗi và trả về 1 tập hợp chuỗi mới
+            */
+            List<string> lstName1 = new List<string>() { "DŨNG", "NHUNG" };
+            List<string> lstName2 = new List<string>() { "HÙNG", "HOÀNG" };
+
+            var lstTemp = lstName1.Concat(lstName2).ToList();
+            //Đối với đối tượng cũng làm tương tự miễn là List có cùng kiểu dữ liệu
+
+            List<NhanVien> lstNV1 = new List<NhanVien>
+            {
+                new NhanVien{Id = 7,MaNV = "Dungna1",TenNV = "Dũng",Email = "dungna29@gmail.com",Sdt = "0912345678",DiaChi = null,ThanhPho = "HN",QueQuan = "HN",TrangThai = true},
+                new NhanVien{Id = 9,MaNV = "MinhDq",TenNV = "Minh",Email = "minhdq@gmail.com",Sdt = "0865791529",DiaChi = null,ThanhPho = "HN",QueQuan = "HN",TrangThai = true},
+            };
+            foreach (var x in lstNV1.Concat(_lstNhanViens))
+            {
+                x.InRaManHinh();
+            }
+
+            var lstTemp3 = _lstNhanViens.Select(c => c.TenNV).Concat(lstNV1.Select(c => c.TenNV));//Trả ra 1 tập tên được cộng bởi 2 list
+        }
+
+
+        #endregion 
+        #region 11. Distinct - Trả về 1 tập giá trị không lặp
+
+        static void LINQ_Distinct()
+        {
+            List<string> lstName1 = new List<string>() { "A", "A","B", "C", };
+            List<string> lstName2 = new List<string>() { "D", "E", "A" };
+            //Distinct: trả về tập giá trị mới Loại bỏ các phần tử trùng nhau
+            foreach (var x in lstName1.Distinct())
+            {
+                Console.WriteLine(x);//A,B,C
+            }
+
+            Console.WriteLine("=========");
+            //Except: Tra về 1 tập mới với cả phần từ từ tập đầu tiên không tồn tại trong tập hợp thứ 2.
+            foreach (var x in lstName2.Except(lstName1))
+            {
+                Console.WriteLine(x);
+            }
+            //Ngoài ra về nhà nghiên cứu cách loại bỏ các đối tượng giống nhau 1 List đối tượng
+        }
+
+        //Kiến thức LINQ còn rộng các trong quá trình học thì chịu khó search thêm khi các gặp bài toán.
+        #endregion
         #region temp
 
         static void LINQ_()
